@@ -28,4 +28,4 @@ python app.py --training training_data.csv --testing testing_data.csv --output o
 
 
 #### 訓練結果
-![](https://imgur.com/RswW2zt)
+![](https://i.imgur.com/RswW2zt.png)
