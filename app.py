@@ -178,7 +178,7 @@ if __name__ == "__main__":
         f.close()
     # draw
     index = np.array([i for i in range(len(trader.Predictions))])
-    plt.plot(index, trader.Testing['open'][:-1], color='red', label='real_value')
+    plt.plot(index, np.array(trader.Testing['open'][:-1]), color='red', label='real_value')
     plt.plot(index, np.array(trader.Predictions), color='blue', label='predicted_value')
     plt.legend()
     plt.show()
