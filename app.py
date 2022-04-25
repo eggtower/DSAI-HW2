@@ -5,6 +5,9 @@ from keras.models import Sequential
 from keras.layers import LSTM
 from keras.layers import Dense
 from keras.layers import Dropout
+from keras.layers import TimeDistributed
+from keras.layers import Flatten
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 
@@ -19,23 +22,16 @@ def trainingWindows(df, ref_day=1, predict_day=1):
 
 def modelBuilding(shape):
     model = Sequential()
-    model.add(LSTM(units=512, kernel_initializer='glorot_normal', return_sequences=True, input_shape=(shape[1], shape[2])))
-    model.add(Dropout(0.3))
+    model.add(LSTM(units = 256, kernel_initializer = 'glorot_normal', return_sequences = True, input_shape = (shape[1], shape[2])))
 
-    model.add(LSTM(units=256, kernel_initializer='glorot_normal', return_sequences=True))
-    model.add(Dropout(0.3))
-
-    model.add(LSTM(units=256, kernel_initializer='glorot_normal', return_sequences=True))
-    model.add(Dropout(0.2))
-
-    model.add(LSTM(units=128, kernel_initializer='glorot_normal', return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(LSTM(units = 256, kernel_initializer = 'glorot_normal', return_sequences = True))
+    model.add(TimeDistributed(Dense(1)))
+    model.add(Flatten())
     
-    model.add(LSTM(units=128, kernel_initializer='glorot_normal'))
-    model.add(Dropout(0.2))
+    model.add(Dense(5,activation='linear'))
+    model.add(Dense(1,activation='linear'))
     
-    model.add(Dense(1, activation='linear'))
-    model.compile(loss="mean_absolute_error", optimizer="adam", metrics=['mean_absolute_error'])
+    model.compile(loss="mean_absolute_error", optimizer="adam",metrics=['mean_absolute_error'])
     
     model.summary()
     
@@ -136,8 +132,9 @@ class Trader():
         
         # model building
         self.Model = modelBuilding(X_train.shape)
+        callback = EarlyStopping(monitor="mean_absolute_error", patience=10, verbose=1, mode="auto")
         # model training
-        self.Model.fit(X_train, Y_train, epochs=100, batch_size=32)
+        self.Model.fit(X_train, Y_train, epochs=300, batch_size=32, validation_split=0.1, callbacks=[callback],shuffle=True)
         
         # define total predict data
         self.TPredictData = self.definePredictData()
