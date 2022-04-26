@@ -26,6 +26,17 @@ python app.py --training training_data.csv --testing testing_data.csv --output o
 * Epochs設定為100
 * Kernel_initializer使用glorot_normal
 
+#### 執行動作
+因需要預測的時間區段較短，考量五日線、20日線的效益(果)較不如預期，故不採用，策略上目標為賺取短期的價差。
+* 當前不持股：
+  * 明日預測股價高於今日股價，action = 1
+  * 明日預測股價低於今日股價，action = -1
+* 當前持１股：
+  * 明日預測股價高於今日股價，action = 0
+  * 明日預測股價低於今日股價，action = -1
+* 當前持-１股：
+  * 明日預測股價高於賣空價格，action = 0
+  * 明日預測股價低於賣空價格，action = 1
 
 #### 訓練結果
 ![](https://i.imgur.com/RswW2zt.png)
