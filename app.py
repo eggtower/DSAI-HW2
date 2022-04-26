@@ -110,9 +110,9 @@ class Trader():
                 action = self.getAction(self.makingAction('SELL'))
         else:
             if(self.State == 1):
-                if(self.Price < D1):
+                if(t < D1):
                     action = self.getAction(self.makingAction('HOLD'))
-                elif(D1 < self.Price):
+                elif(D1 < t):
                     action = self.getAction(self.makingAction('SELL'))
             elif(self.State == -1):
                 if(self.Price < D1):
