@@ -1,6 +1,10 @@
 # DSAI-HW2
 
 ## 使用說明
+建構虛擬環境
+```
+conda create --name <env_name> python=3.7
+```
 安裝相依套件
 ```
 pip install -r requirements.txt
