@@ -140,7 +140,7 @@ class Trader():
         self.TPredictData = self.definePredictData()
         
         locat = len(self.Training)
-        for i in range(locat, locat + len(self.Testing) - 1):
+        for i in range(locat + 1, locat + len(self.Testing)):
             data = self.TPredictData[0:i].copy()
             open = data['open'][-20:].copy()
             for col in data.columns:
