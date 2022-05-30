@@ -5,6 +5,10 @@
 ```
 conda create --name <env_name> python=3.7
 ```
+進入虛擬環境
+```
+conda activate <env_name>
+```
 安裝相依套件
 ```
 pip install -r requirements.txt
